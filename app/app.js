@@ -12,12 +12,13 @@ app.get('/', function (req, res) {
 
 app.get('/api/pow2Func', function (req, res) {
   talk.sayOk('OK', res)
-  //pos2Func.getCorelation()
 })
 
 app.get('/api/parabolaData', function (req, res) {
   dataGenerator.parabolaData(req.query, function (data) {
-    talk.sayOk(data, res)
+    pow2Func.getCorelation(data, function (corelation) {
+      talk.sayOk({list: data, corelation: corelation}, res)
+    })
   })
 })
 

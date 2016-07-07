@@ -19,13 +19,9 @@
 		<input type = 'text' ng-model = 'corelation.rndTo' placeholder='rnd To'><br>
 		<input type = 'button' value = 'get data' ng-click = 'corelation.get()'>
 		<div>
-			<div ng-repeat = '(i, xy) in corelation.list'>
-				<span>
-					{{xy[0]}}
-				</span>
-				|
-				<span>
-					{{xy[1]}}
+			<div ng-repeat = 'coords in corelation.list'>
+				<span ng-repeat = 'coord in coords track by $index'>
+					{{coord}} |
 				</span>
 			</div>
 		<div>

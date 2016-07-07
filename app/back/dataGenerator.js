@@ -63,11 +63,11 @@ exports.parabolaData = function parabolaData (data, res) {
   var pd = []
   var count = (data.xTo - data.xFrom) / data.step + 1
   var x = 0
-  console.log(data, count)
   for (var i = 0; i < count; i += 1) {
     x = i * data.step + data.xFrom
     pd.push([
       x,
+      Math.pow(x, 2),
       data.A * Math.pow(x, 2) + data.B * x + data.C + parseInt(getRnd(data.rndFrom, data.rndTo), 10)
     ])
   }

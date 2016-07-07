@@ -48,7 +48,7 @@ angular.module('app', [])
           return
         }
 
-        self.list = result.data
+        self.list = result.data.list
         app.Message('success', 'Success', 'get getCorelation')
       })
       .error(function () {

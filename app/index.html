@@ -9,9 +9,7 @@
 </head>
 <body>
   <div ng-controller = 'CorelationController as corelation'>
-		<input type = 'text' ng-model = 'corelation.A' placeholder='A'><br>
-		<input type = 'text' ng-model = 'corelation.B' placeholder='B'><br>
-		<input type = 'text' ng-model = 'corelation.C' placeholder='C'><br>
+		<input type = 'text' ng-model = 'corelation.func' placeholder='function'><br>
 		<input type = 'text' ng-model = 'corelation.step' placeholder='step'><br>
 		<input type = 'text' ng-model = 'corelation.xFrom' placeholder='X From'>
 		<input type = 'text' ng-model = 'corelation.xTo' placeholder='X To'><br>
@@ -19,12 +17,18 @@
 		<input type = 'text' ng-model = 'corelation.rndTo' placeholder='rnd To'><br>
 		<input type = 'button' value = 'get data' ng-click = 'corelation.get()'>
 		<div>
+			<span ng-repeat = 'var in corelation.vars'>
+				{{var}} |
+			</span>
+		</div>
+		<br>
+		<div>
 			<div ng-repeat = 'coords in corelation.list'>
 				<span ng-repeat = 'coord in coords track by $index'>
 					{{coord}} |
 				</span>
 			</div>
-		<div>
+		</div>
   </div>
 </body>
 </html>

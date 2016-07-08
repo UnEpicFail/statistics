@@ -4,7 +4,15 @@ exports.getCorelation = function getCorelation (coords, res) {
 
   var obj = {}
   obj.matrix = getMatrix(coords)
-  obj.vars = getVars(copyArr(obj.matrix))
+  obj.vars = []
+  var tmp = copyArr(obj.matrix)
+  var tmp1
+  for (var i = 0, max_i = coords[0].length; i < max_i; i += 1) {
+    tmp1 = copyArr(tmp)
+    console.log(tmp)
+    obj.vars.push(getVars(tmp))
+    tmp = normalize(tmp1)
+  }
 
   res(obj)
 }
@@ -26,12 +34,12 @@ function getMatrix (coords) {
     add last string A1*Ex1 + A2*Ex2 + ... + An-1*Exn-1 + An*n = Exn
   */
   arr.push([])
-  arr[n].push(length)
+  arr[n].push(coords.length)
   for (var z = 0; z < length; z += 1) {
     arr[n].push(sum(coords, [z]))
   }
 
-  return normalize(copyArr(arr)) // move [m,0] to [m, m-2] where 0 > m => n
+  return copyArr(arr) // move [m,0] to [m, m-2] where 0 > m => n
 }
 
 function sum (arr, pos) {
@@ -48,7 +56,7 @@ function sum (arr, pos) {
 
 function normalize (arr) {
   for (var i = 0, max_i = arr.length; i < max_i; i += 1) {
-    arr[i].splice(max_i - 1, 0, arr[i].shift())
+    arr[i].unshift(arr[i].splice(max_i - 1, 1)[0])
   }
   return arr.slice()
 }
@@ -56,20 +64,22 @@ function normalize (arr) {
 function getVars (arr) {
   var start = 0
   var coef = 0
-  console.log(arr)
+  //console.log(arr)
   for (var i = 1, max_i = arr.length; i < max_i; i += 1) {
     start = i - 1
     for (var k = i; k < max_i; k += 1) {
+      //console.log('[', k, ',', start, '] / [', start, ',', start, ']')
       coef = arr[k][start] / arr[start][start]
       for (var l = start, max_l = arr[k].length; l < max_l; l += 1) {
-        console.log('[', k, ',', l, '] - [', start, ',', l, '] * coef', arr[k][l] - arr[start][l] * coef)
-        console.log(arr[k][l], arr[start][l], coef)
+        //console.log('[', k, ',', l, '] - [', start, ',', l, '] * coef')
+        //, arr[k][l] - arr[start][l] * coef
+        //console.log(arr[k][l], arr[start][l], coef)
         arr[k][l] = arr[k][l] - arr[start][l] * coef
       }
     }
   }
-  console.log(arr)
-  console.log('[', max_i - 1, ',', max_i, '] / [', max_i - 1, ',', max_i - 1, ']', arr[max_i - 1][max_i] / arr[max_i - 1][max_i - 1])
+  //console.log(arr)
+  //console.log('[', max_i - 1, ',', max_i, '] / [', max_i - 1, ',', max_i - 1, ']', arr[max_i - 1][max_i] / arr[max_i - 1][max_i - 1])
   return arr[max_i - 1][max_i] / arr[max_i - 1][max_i - 1]
 }
 

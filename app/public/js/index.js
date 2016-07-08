@@ -5,20 +5,12 @@ angular.module('app', [])
     self.get = function () {
       var data = {}
 
-      if (self.A) {
-        data.A = self.A
-      }
-
-      if (self.B) {
-        data.B = self.B
-      }
-
-      if (self.C) {
-        data.C = self.C
-      }
-
       if (self.step) {
         data.step = self.step
+      }
+
+      if (self.func) {
+        data.func = self.func
       }
 
       if (self.xFrom) {
@@ -49,6 +41,7 @@ angular.module('app', [])
         }
 
         self.list = result.data.list
+        self.vars = result.data.corelation.vars
         app.Message('success', 'Success', 'get getCorelation')
       })
       .error(function () {
